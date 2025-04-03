@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Aplication.EventHandler
 {
-    internal class CreatePedidoCommandHandler : IRequestHandler<CreatePedidoCommand, int>
+    public class CreatePedidoCommandHandler : IRequestHandler<CreatePedidoCommand, int>
     {
         public IPedidoRepository _pedidoRepository { get; set; }
         public CreatePedidoCommandHandler(IPedidoRepository pedidoRepository)
@@ -27,9 +27,9 @@ namespace Aplication.EventHandler
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             };
-            await _pedidoRepository.AddPedido(pedido);
+           var id = await _pedidoRepository.AddPedido(pedido);
             
-            return pedido.Id;
+            return id;
         }
     }
 }

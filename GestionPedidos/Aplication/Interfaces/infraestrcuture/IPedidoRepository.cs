@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using Domain.Dtos;
+using Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,12 @@ namespace Aplication.Interfaces.infraestrcuture
     public interface IPedidoRepository
     {
         Task<int> AddPedido(Pedido pedido);
-        
+        Task<List<Pedido>> GetPedidos();
+        Task UpdatePedido(Pedido pedido);
+        Task CreateHistoryPedido(HistorialEstado historialPedido);
+        Task DeletePedido(Pedido pedido);
+        Task DeletePedidoHistory(List<HistorialEstado> historialPedido);
+        Task<List<HistorialEstado>> GetHistoryPedidos();
+
     }
 }

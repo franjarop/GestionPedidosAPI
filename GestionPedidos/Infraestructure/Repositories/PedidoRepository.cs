@@ -1,7 +1,10 @@
-﻿using Aplication.Interfaces.infraestrcuture;
+﻿using Aplication.Exceptions;
+using Aplication.Interfaces.infraestrcuture;
+using Domain.Dtos;
 using Domain.Models;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,13 +18,101 @@ namespace Infraestructure.Repositories
         private readonly ApplicationDbContext _context;
         public PedidoRepository(ApplicationDbContext context)
         {
-            _context = context; 
+            _context = context;
         }
         public async Task<int> AddPedido(Pedido pedido)
         {
-            _context.Add(pedido);
-            await _context.SaveChangesAsync();
-            return pedido.Id;
+            try
+            {
+                _context.Add(pedido);
+                await _context.SaveChangesAsync();
+                return pedido.Id;
+            }
+            catch (Exception ex)
+            {
+                throw new RepositoryException("Ocurrio un error al registrar el pedido", ex);
+            }
+        }
+
+        public async Task CreateHistoryPedido(HistorialEstado historialPedido)
+        {
+            try
+            {
+                _context.Add(historialPedido);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new RepositoryException("Ocurrio un error al registrar el historial del pedido", ex);
+            }
+
+        }
+
+        public async Task DeletePedido(Pedido pedido)
+        {
+            try
+            {
+                _context.Remove(pedido);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new RepositoryException("Ocurrio un error al eliminar el pedido", ex);
+            }
+        }
+
+        public async Task DeletePedidoHistory(List<HistorialEstado> historialPedido)
+        {
+            try
+            {
+                _context.RemoveRange(historialPedido);
+                await _context.SaveChangesAsync(); 
+            }
+            catch (Exception ex)
+            {
+                throw new RepositoryException("Ocurrio un error al eliminar el historial del pedido", ex);
+            }
+        }
+
+        public async Task<List<HistorialEstado>> GetHistoryPedidos()
+        {
+            try
+            {
+                var historialPedidos = await _context.HistorialEstados.ToListAsync();
+                return historialPedidos; 
+            }
+            catch (Exception ex)
+            {
+                throw new RepositoryException("Ocurrio un error al obtener el historial de los pedidos", ex);
+            }
+        }
+
+        public async Task<List<Pedido>> GetPedidos()
+        {
+            try
+            {
+                var pedidos = await _context.Pedidos.ToListAsync();
+                return pedidos;
+            }
+            catch (Exception ex)
+            {
+                throw new RepositoryException("Ocurrio un error al obtener los pedidos", ex);
+            }
+
+        }
+
+        public async Task UpdatePedido(Pedido pedido)
+        {
+            try
+            {
+                _context.Update(pedido);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new RepositoryException("Ocurrio un error al actualizar el pedido", ex);
+            }
+
         }
     }
 }
