@@ -32,7 +32,7 @@ namespace Aplication.Behaviors
                 .ToList();
 
             if (failures.Any())
-                throw new FluentValidation.ValidationException(failures);
+                throw new ValidationException(failures);
 
 
             return await next();

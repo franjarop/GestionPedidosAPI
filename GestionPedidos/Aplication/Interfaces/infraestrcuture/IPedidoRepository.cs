@@ -14,6 +14,9 @@ namespace Aplication.Interfaces.infraestrcuture
         Task<List<Pedido>> GetPedidos();
         Task UpdatePedido(Pedido pedido);
         Task CreateHistoryPedido(HistorialEstado historialPedido);
+        Task DeletePedido(Pedido pedido);
+        Task DeletePedidoHistory(List<HistorialEstado> historialPedido);
+        Task<List<HistorialEstado>> GetHistoryPedidos();
 
     }
 }
