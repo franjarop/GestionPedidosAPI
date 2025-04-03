@@ -1,4 +1,5 @@
 ﻿using Aplication.Interfaces.infraestrcuture;
+using Domain.Dtos;
 using Domain.Models;
 using Infraestructure.Context;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,12 @@ namespace Infraestructure.Repositories
             _context.Add(pedido);
             await _context.SaveChangesAsync();
             return pedido.Id;
+        }
+
+        public async Task<List<Pedido>> GetPedidos()
+        {
+            var pedidos = await _context.Pedidos.ToListAsync();
+            return pedidos;
         }
     }
 }

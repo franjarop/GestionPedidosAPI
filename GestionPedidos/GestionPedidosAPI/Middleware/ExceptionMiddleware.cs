@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Aplication.Exceptions;
+using FluentValidation;
 using System.Net;
 using System.Text.Json;
 
@@ -33,6 +34,17 @@ namespace GestionPedidosAPI.Middleware
                 {
                     message = "Error de validación",
                     errors
+                }));
+            }
+            catch (NotFoundException ex)
+            {
+                httpContext.Response.StatusCode = StatusCodes.Status404NotFound;
+                httpContext.Response.ContentType = "application/json";
+
+                await httpContext.Response.WriteAsync(JsonSerializer.Serialize(new
+                {
+                    message = "Recurso no encontrado",
+                    details = ex.Message
                 }));
             }
             catch (Exception ex)
