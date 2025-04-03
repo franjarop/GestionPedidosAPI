@@ -24,11 +24,16 @@ namespace GestionPedidosAPI.Controllers
             _mediator = mediator;
         }
 
+        /// <summary>
+        /// Inicia sesión y genera un token JWT para autenticación.
+        /// </summary>
+        /// <param name="request">Credenciales del usuario</param>
+        /// <returns>retorna un token si las credenciales son correctas</returns>
         [AllowAnonymous]
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequestDto request)
         {
-            if (request.User == "admin" && request.Password == "1234")
+            if (request.User == "javiss" && request.Password == "1717")
             {
                 var claims = new[]
                 {
@@ -45,7 +50,6 @@ namespace GestionPedidosAPI.Controllers
                     expires: DateTime.UtcNow.AddHours(1),
                     signingCredentials: creds
                 );
-
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token)
@@ -57,10 +61,10 @@ namespace GestionPedidosAPI.Controllers
 
 
         /// <summary>
-        /// Metodo que permite registrar un pedido
+        /// Registra un pedido. Nota:Requiere autenticación.
         /// </summary>
-        /// <param name="Crear pedido"></param>
-        /// <returns></returns>
+        /// <param name="command">Datos del pedido</param>
+        /// <returns>ID del pedido creado</returns>
         [Authorize]
         [HttpPost("Registrar")]
         public async Task<ActionResult> CrearPedido([FromBody] CreatePedidoCommand command)
@@ -70,9 +74,9 @@ namespace GestionPedidosAPI.Controllers
         }
 
         /// <summary>
-        /// Funcion que permite retornar todos los pedidos registrados
+        /// Obtiene todos los pedidos registrados en el sistema.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Lista de pedidos</returns>
         [AllowAnonymous]
         [HttpGet("Obtener")]
         public async Task<ActionResult> ObtenerPedidos()
@@ -82,10 +86,10 @@ namespace GestionPedidosAPI.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Obtiene un pedido específico por su ID.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        /// <param name="id">ID del pedido</param>
+        /// <returns>Datos del pedido</returns>
         [AllowAnonymous]
         [HttpGet("Obtenerporid/{id}" )]
         public async Task<ActionResult> ObtenerPedidosByID(int id)
@@ -94,6 +98,11 @@ namespace GestionPedidosAPI.Controllers
             return Ok(result);
         }
 
+        /// <summary>
+        /// Actualiza el estado de un pedido. Nota:Requiere autenticación.
+        /// </summary>
+        /// <param name="command">Nuevo estado y ID del pedido</param>
+        /// <returns>Mensaje de confirmación</returns>
         [Authorize]
         [HttpPut("Actualizar")]
         public async Task<ActionResult> ActualizarEstadoPedido([FromBody] UpdatePedidoCommand command)
@@ -102,6 +111,11 @@ namespace GestionPedidosAPI.Controllers
             return Ok(new { mensaje = "Pedido actualizado" });
         }
 
+        /// <summary>
+        /// Elimina un pedido por su ID. Nota:Requiere autenticación.
+        /// </summary>
+        /// <param name="id">ID del pedido a eliminar</param>
+        /// <returns>Mensaje de confirmación</returns>
         [Authorize]
         [HttpDelete("Eliminarporid/{id}")]
         public async Task<ActionResult> DeletePedido(int id)
