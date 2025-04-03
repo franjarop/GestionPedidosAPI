@@ -95,6 +95,7 @@ Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6...
 | GET    | `/api/pedidos/obtener`        | Lista todos los pedidos                  |
 | GET    | `/api/pedidos/obtenerporid/{id}` | Obtiene un pedido por su ID          |
 | POST   | `/api/pedidos/login`          | Obtiene un token JWT                     |
+| GET   | `/api/pedidos/login`          | Obtiene un token JWT                     |
 
 ---
 
