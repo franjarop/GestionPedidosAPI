@@ -23,7 +23,8 @@ namespace Infraestructure.Context
             modelBuilder.Entity<Pedido>()
                 .HasMany(p => p.HistorialEstados)
                 .WithOne(h => h.Pedido)
-                .HasForeignKey(h => h.OrderId);
+                .HasForeignKey(h => h.OrderId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
