@@ -30,7 +30,7 @@ API RESTful para la gestión de pedidos, construida con .NET 8, CQRS, Clean Arch
 1. Clona el repositorio:
 
 ```bash
-git clone https://github.com/tuusuario/GestionPedidosAPI.git
+git clone https://github.com/franjarop/GestionPedidosAPI.git
 cd GestionPedidosAPI
 ```
 
