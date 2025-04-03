@@ -18,11 +18,15 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
 builder.Services.AddInfraestructure(builder.Configuration);
 
-// MediatR y validaciones
+
 builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(CreatePedidoCommand).Assembly));
 
 builder.Services.AddValidatorsFromAssemblyContaining<CreatePedidoCommandValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<UpdatePedidoCommandValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<GetPedidoByIdQuerieValidator>();
+
+
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 var app = builder.Build();

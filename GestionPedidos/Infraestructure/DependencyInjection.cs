@@ -17,7 +17,7 @@ namespace Infraestructure
         public static IServiceCollection AddInfraestructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(configuration.GetConnectionString("GestionPedidosContext")));
 
             services.AddScoped<IPedidoRepository, PedidoRepository>();
 
