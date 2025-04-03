@@ -67,7 +67,8 @@ namespace GestionPedidosAPI.Middleware
 
                 await httpContext.Response.WriteAsync(JsonSerializer.Serialize(new
                 {
-                    message = ex.Message
+                    message = "Recurso no encontrado",
+                    details = ex.Message
                 }));
             }
             catch (Exception ex)
