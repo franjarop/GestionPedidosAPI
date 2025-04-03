@@ -2,6 +2,7 @@
 using Aplication.Behaviors;
 using Aplication.Commands;
 using Aplication.validartors;
+using Domain.Dtos;
 using FluentValidation;
 using GestionPedidosAPI.Middleware;
 using Infraestructure;
@@ -77,11 +78,11 @@ builder.Services.AddAuthentication("Bearer")
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes("mYjw7TSj83z@NrpWmLQvKx5uE9AczGd3"))
+                Encoding.UTF8.GetBytes(builder.Configuration.GetSection("Settings")["SecretKey"]))
         };
     });
 
-
+builder.Services.Configure<SettingsRequestDto>(builder.Configuration.GetSection("Settings")); 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline

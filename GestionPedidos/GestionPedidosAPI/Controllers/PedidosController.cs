@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -19,9 +20,12 @@ namespace GestionPedidosAPI.Controllers
     public class PedidosController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public PedidosController(IMediator mediator)
+        private readonly SettingsRequestDto _settings;
+
+        public PedidosController(IMediator mediator, IOptions<SettingsRequestDto> settings)
         {
             _mediator = mediator;
+            _settings = settings.Value;
         }
 
         /// <summary>
@@ -33,14 +37,14 @@ namespace GestionPedidosAPI.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequestDto request)
         {
-            if (request.User == "javiss" && request.Password == "1717")
+            if (request.User == _settings.UserToken && request.Password == _settings.PasswordToken)
             {
                 var claims = new[]
                 {
             new Claim(ClaimTypes.Name, request.User)
         };
 
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("mYjw7TSj83z@NrpWmLQvKx5uE9AczGd3"));
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SecretKey));
                 var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
                 var token = new JwtSecurityToken(
