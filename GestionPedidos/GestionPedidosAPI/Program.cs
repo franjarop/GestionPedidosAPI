@@ -25,7 +25,7 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddValidatorsFromAssemblyContaining<CreatePedidoCommandValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdatePedidoCommandValidator>();
 builder.Services.AddValidatorsFromAssemblyContaining<GetPedidoByIdQuerieValidator>();
-
+builder.Services.AddValidatorsFromAssemblyContaining<DeletePedidoCommandValidator>();
 
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 

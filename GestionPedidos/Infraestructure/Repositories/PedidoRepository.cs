@@ -32,7 +32,6 @@ namespace Infraestructure.Repositories
             {
                 throw new RepositoryException("Ocurrio un error al registrar el pedido", ex);
             }
-
         }
 
         public async Task CreateHistoryPedido(HistorialEstado historialPedido)
@@ -47,6 +46,45 @@ namespace Infraestructure.Repositories
                 throw new RepositoryException("Ocurrio un error al registrar el historial del pedido", ex);
             }
 
+        }
+
+        public async Task DeletePedido(Pedido pedido)
+        {
+            try
+            {
+                _context.Remove(pedido);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new RepositoryException("Ocurrio un error al eliminar el pedido", ex);
+            }
+        }
+
+        public async Task DeletePedidoHistory(List<HistorialEstado> historialPedido)
+        {
+            try
+            {
+                _context.RemoveRange(historialPedido);
+                await _context.SaveChangesAsync(); 
+            }
+            catch (Exception ex)
+            {
+                throw new RepositoryException("Ocurrio un error al eliminar el historial del pedido", ex);
+            }
+        }
+
+        public async Task<List<HistorialEstado>> GetHistoryPedidos()
+        {
+            try
+            {
+                var historialPedidos = await _context.HistorialEstados.ToListAsync();
+                return historialPedidos; 
+            }
+            catch (Exception ex)
+            {
+                throw new RepositoryException("Ocurrio un error al obtener el historial de los pedidos", ex);
+            }
         }
 
         public async Task<List<Pedido>> GetPedidos()

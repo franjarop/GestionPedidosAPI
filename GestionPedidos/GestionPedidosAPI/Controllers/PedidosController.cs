@@ -58,5 +58,12 @@ namespace GestionPedidosAPI.Controllers
             var result = await _mediator.Send(command);
             return Ok(new { mensaje = "Pedido actualizado" });
         }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeletePedido(int id)
+        {
+            var result = await _mediator.Send(new DeletePedidoCommand{ Id = id });
+            return Ok(new { mensaje = "Pedido eliminado" });
+        }
     }
 }
