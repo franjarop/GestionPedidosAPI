@@ -51,5 +51,12 @@ namespace GestionPedidosAPI.Controllers
             var result = await _mediator.Send(new GetPedidoByIdQuerie { Id = id});
             return Ok(result);
         }
+
+        [HttpPut]
+        public async Task<ActionResult> ActualizarEstadoPedido([FromBody] UpdatePedidoCommand command)
+        {
+            var result = await _mediator.Send(command);
+            return Ok(new { mensaje = "Pedido actualizado" });
+        }
     }
 }

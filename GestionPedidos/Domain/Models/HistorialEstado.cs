@@ -10,9 +10,9 @@ namespace Domain.Models
     {
         public int Id { get; set; }
         public int OrderId { get; set; }
-        public EstadoPedido PreviosStatus { get; set; }
+        public EstadoPedido PreviousStatus { get; set; }
         public EstadoPedido NewStatus { get; set; }
-        public DateTime ChangeAt { get; set; }
+        public DateTime ChangedAt { get; set; }
 
         public Pedido Pedido { get; set; }
     }

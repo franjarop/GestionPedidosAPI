@@ -12,6 +12,8 @@ namespace Aplication.Interfaces.infraestrcuture
     {
         Task<int> AddPedido(Pedido pedido);
         Task<List<Pedido>> GetPedidos();
+        Task UpdatePedido(Pedido pedido);
+        Task CreateHistoryPedido(HistorialEstado historialPedido);
 
     }
 }
